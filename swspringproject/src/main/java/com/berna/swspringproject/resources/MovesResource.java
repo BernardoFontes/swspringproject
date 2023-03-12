@@ -5,7 +5,9 @@ import com.berna.swspringproject.service.MovesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -27,7 +29,9 @@ public class MovesResource {
     }
 
     @PostMapping
-    public void insert(@RequestBody Move obj){
+    public ResponseEntity<Move> insert(@RequestBody Move obj){
          movesService.insert(obj);
+         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
+         return ResponseEntity.created(uri).body(obj);
     }
 }
