@@ -40,4 +40,11 @@ public class MovesResource {
         movesService.delete(id);
         return ResponseEntity.noContent().build();
     }
+
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<Move> update(@PathVariable Long id, @RequestBody Move move){
+        move.setId(id);
+        Move newMove = movesService.update(move);
+        return ResponseEntity.ok().body(newMove);
+    }
 }
